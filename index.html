@@ -6191,10 +6191,28 @@
         ></textarea>
         </div>
       </div>
-      <div class="motif-wrap" id="motif-si-${item.id}">
+            <div class="motif-wrap" id="motif-si-${item.id}">
         <div class="motif-inner si">
           <div class="motif-lbl si">🟣 Commentaire SI (Suivi SI)</div>
-          <input class="motif-inp si" id="motif-si-val-${item.id}" placeholder="${r.si && r.si !== '_' ? r.si : 'Décrire la situation inacceptable…'}" autocomplete="off">
+         
+          ${r.si && r.si !== '_'
+          ? `
+              <ul class="motif-list">
+                ${r.si
+            .split('<br>• ')
+            .filter(v => v.trim() !== '')
+            .map(v => `<li>${v.trim()}</li>`)
+            .join('')}
+              </ul>
+            `
+          : ''
+        }
+        <textarea
+          class="motif-inp si"
+          id="motif-si-val-${item.id}"
+          placeholder="Décrire la situation inacceptable…"
+          rows="5"
+        ></textarea>
         </div>
       </div>
     </div>`;
