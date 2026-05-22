@@ -1267,7 +1267,8 @@
       border-radius: 10px;
       padding: 10px 14px;
       width: 220px;
-      font-size: 12px;
+      font-size: 10px;
+      font-weight: 600;
       line-height: 1.55;
       color: #ffffffa8;
       box-shadow: 0 8px 32px rgba(0, 0, 0, .8);
@@ -1373,7 +1374,7 @@
       background: transparent;
       border: none;
       border-bottom: 1px solid rgba(255, 255, 255, .1);
-      color: #ffffff6b;
+      color: var(--text);
       font-family: 'Sora', sans-serif;
       font-size: 10px;
       padding: 4px 2px 7px;
@@ -2840,9 +2841,12 @@
             </div>
           </div>
           <div class="field" id="ev-activite-field">
-            <label>Activité</label>
+            <label>Marché</label>
             <select id="ev-activite" onchange="onActiviteChange()">
-              <option value="FO Appel Entrant">FO Appel Entrant</option>
+              <option>Fixe</option>
+              <option>Mobile</option>
+              <option>Internet</option>
+
             </select>
           </div>
         </div>
@@ -2879,6 +2883,7 @@
               <select id="ev-typo">
                 <option>Informer assister</option>
                 <option>Réclamer</option>
+                <option>Requête</option>
                 <option>Autre</option>
               </select>
             </div>
@@ -6325,8 +6330,8 @@
           actSel.innerHTML = '<option value="BO Hors Certification">BO Hors Certification</option>';
           if (actField) actField.style.display = 'none';
         } else {
-          actSel.innerHTML = '<option value="FO Appel Entrant">FO Appel Entrant</option>'
-            + '<option value="FO Appel Sortant">FO Appel Sortant</option>';
+          actSel.innerHTML = '<option>Fixe</option>'
+            + '<option>Mobile</option>' + '<option>Internet</option>';
           if (actField) actField.style.display = '';
           if (evalSub) evalSub.textContent = 'Grille FO Appel Entrant — Yas';
         }
