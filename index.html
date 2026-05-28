@@ -2145,6 +2145,164 @@
         transform: none
       }
     }
+
+
+    /* ══ SEARCHABLE AGENT SELECT ══ */
+    .ss-wrap {
+      position: relative;
+      width: 100%
+    }
+
+    .ss-trigger {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 8px 32px 8px 12px;
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color .2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative
+    }
+
+    .ss-trigger:focus,
+    .ss-trigger.open {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(27, 63, 160, .15)
+    }
+
+    .ss-trigger::after {
+      content: '';
+      position: absolute;
+      right: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 8px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23505050' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+      pointer-events: none;
+      transition: transform .2s
+    }
+
+    .ss-trigger.open::after {
+      transform: translateY(-50%) rotate(180deg)
+    }
+
+    /* inline filter style (petits selects dans les barres de filtres) */
+    .ss-trigger.ss-inline {
+      border-radius: 8px;
+      padding: 6px 28px 6px 10px;
+      font-size: 12px;
+      color: var(--text2);
+      min-width: 300px
+    }
+
+    .ss-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 100%;
+      max-width: 340px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .ss-dropdown.open {
+      display: flex
+    }
+
+    [data-theme="light"] .ss-dropdown {
+      background: #ffffff;
+      border-color: #e2e4e8;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .12)
+    }
+
+    .ss-search-wrap {
+      padding: 8px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .ss-search-wrap .ss-search {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px 7px 34px;
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      font-size: 12px;
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23606060' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 11px center;
+    }
+
+    .ss-search-wrap .ss-search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(27, 63, 160, .12);
+    }
+
+    [data-theme="light"] .ss-search-wrap .ss-search {
+      background-color: #f0f1f4;
+      border-color: #d1d5db;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23909090' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 11px center;
+    }
+
+    .ss-list {
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 4px
+    }
+
+    .ss-opt {
+      padding: 8px 12px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      transition: background .1s
+    }
+
+    .ss-opt:hover,
+    .ss-opt.focused {
+      background: var(--surface2)
+    }
+
+    .ss-opt.selected {
+      background: rgba(27, 63, 160, .12);
+      color: var(--accent2)
+    }
+
+    .ss-opt-sub {
+      font-size: 10px;
+      color: var(--text3);
+      font-family: 'DM Mono', monospace
+    }
+
+    .ss-empty {
+      padding: 12px;
+      font-size: 12px;
+      color: var(--text3);
+      text-align: center
+    }
   </style>
 </head>
 
@@ -2343,10 +2501,17 @@
             style="background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:12px;font-family:Sora,sans-serif;outline:none;min-width:110px">
             <option value="">Toutes équipes</option>
           </select>
-          <select id="dash-f-agent" onchange="renderDashboard()"
-            style="background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 10px;font-size:12px;font-family:Sora,sans-serif;outline:none;min-width:140px">
-            <option value="">Tous agents</option>
-          </select>
+          <div class="ss-wrap" style="min-width:140px;width:auto">
+            <select id="dash-f-agent" style="display:none">
+              <option value="">Tous les agents</option>
+            </select>
+            <button type="button" class="ss-trigger ss-inline" id="dash-f-agent-trigger">Tous les agents</button>
+            <div class="ss-dropdown" id="dash-f-agent-dd">
+              <div class="ss-search-wrap"><input class="ss-search" placeholder="Rechercher un agent…"
+                  autocomplete="off"></div>
+              <div class="ss-list"></div>
+            </div>
+          </div>
           <div id="dash-period-wrap"></div>
           <div id="dash-gran-selector"
             style="display:flex;gap:3px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:3px">
@@ -2599,10 +2764,17 @@
               style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Sora',sans-serif;outline:none">
               <option value="">Toutes équipes</option>
             </select>
-            <select id="si-f-agent" onchange="renderSI()"
-              style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Sora',sans-serif;outline:none">
-              <option value="">Tous les agents</option>
-            </select>
+            <div class="ss-wrap" style="min-width:140px;width:auto">
+              <select id="si-f-agent" style="display:none">
+                <option value="">Tous les agents</option>
+              </select>
+              <button type="button" class="ss-trigger ss-inline" id="si-f-agent-trigger">Tous les agents</button>
+              <div class="ss-dropdown" id="si-f-agent-dd">
+                <div class="ss-search-wrap"><input class="ss-search" placeholder="Rechercher un agent…"
+                    autocomplete="off"></div>
+                <div class="ss-list"></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="stats-grid" id="si-stats"></div>
@@ -2827,9 +2999,17 @@
         <div class="form-row3" style="margin-bottom:8px">
           <div class="field">
             <label>Agent *</label>
-            <select id="ev-login-sel" onchange="syncLoginField()">
-              <option value="">— Sélectionner un agent —</option>
-            </select>
+            <div class="ss-wrap">
+              <select id="ev-login-sel" style="display:none">
+                <option value="">— Sélectionner un agent —</option>
+              </select>
+              <button type="button" class="ss-trigger" id="ev-login-sel-trigger">— Sélectionner un agent —</button>
+              <div class="ss-dropdown" id="ev-login-sel-dd">
+                <div class="ss-search-wrap"><input class="ss-search" placeholder="Rechercher un agent…"
+                    autocomplete="off"></div>
+                <div class="ss-list"></div>
+              </div>
+            </div>
           </div>
           <div class="field">
             <label>Date *</label>
@@ -6923,6 +7103,191 @@
 
     document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); }));
   </script>
+
+  <!-- ══ SEARCHABLE AGENT SELECT ENGINE ══ -->
+  <script>
+    (function () {
+      'use strict';
+
+      var SS_CONFIGS = [
+        { id: 'dash-f-agent', placeholder: 'Tous les agents', onchange: function () { if (typeof renderDashboard === 'function') renderDashboard(); } },
+        { id: 'heval-f-agent', placeholder: 'Tous les agents', onchange: function () { if (typeof renderHistEvals === 'function') renderHistEvals(); } },
+        { id: 'si-f-agent', placeholder: 'Tous les agents', onchange: function () { if (typeof renderSI === 'function') renderSI(); } },
+        { id: 'ev-login-sel', placeholder: '— Sélectionner un agent —', onchange: function () { if (typeof syncLoginField === 'function') syncLoginField(); } },
+      ];
+
+      var _openId = null;
+
+      function getEl(id) { return document.getElementById(id); }
+
+      function escHtml(s) {
+        return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function buildList(sel, listEl, searchVal, currentVal) {
+        listEl.innerHTML = '';
+        var q = (searchVal || '').toLowerCase().trim();
+        var count = 0;
+        Array.from(sel.options).forEach(function (opt) {
+          var label = opt.textContent;
+          var val = opt.value;
+          if (q && val !== '' && !label.toLowerCase().includes(q)) return;
+          var div = document.createElement('div');
+          div.className = 'ss-opt' + (val === currentVal ? ' selected' : '');
+          div.dataset.val = val;
+          var parenMatch = label.match(/^(.*?)\s*\(([^)]+)\)$/);
+          if (parenMatch && val !== '') {
+            div.innerHTML = '<span>' + escHtml(parenMatch[1].trim()) + '</span><span class="ss-opt-sub">' + escHtml(parenMatch[2]) + '</span>';
+          } else {
+            div.textContent = label;
+          }
+          listEl.appendChild(div);
+          count++;
+        });
+        if (count === 0) {
+          var empty = document.createElement('div');
+          empty.className = 'ss-empty';
+          empty.textContent = 'Aucun agent trouvé';
+          listEl.appendChild(empty);
+        }
+      }
+
+      function openDropdown(cfg) {
+        if (_openId && _openId !== cfg.id) closeDropdown(_openId);
+        var trigger = getEl(cfg.id + '-trigger');
+        var dd = getEl(cfg.id + '-dd');
+        var sel = getEl(cfg.id);
+        var search = dd.querySelector('.ss-search');
+        var listEl = dd.querySelector('.ss-list');
+        if (!trigger || !dd || !sel) return;
+        trigger.classList.add('open');
+        dd.classList.add('open');
+        _openId = cfg.id;
+        search.value = '';
+        buildList(sel, listEl, '', sel.value);
+        setTimeout(function () { search.focus(); }, 50);
+      }
+
+      function closeDropdown(id) {
+        var trigger = getEl(id + '-trigger');
+        var dd = getEl(id + '-dd');
+        if (trigger) trigger.classList.remove('open');
+        if (dd) dd.classList.remove('open');
+        if (_openId === id) _openId = null;
+      }
+
+      function selectValue(cfg, val) {
+        var sel = getEl(cfg.id);
+        var trigger = getEl(cfg.id + '-trigger');
+        if (!sel || !trigger) return;
+        sel.value = val;
+        var opt = Array.from(sel.options).find(function (o) { return o.value === val; });
+        var label = opt ? opt.textContent : cfg.placeholder;
+        var cleanLabel = label.replace(/\s*\([^)]+\)$/, '').trim() || cfg.placeholder;
+        trigger.textContent = val ? cleanLabel : cfg.placeholder;
+        closeDropdown(cfg.id);
+        cfg.onchange();
+      }
+
+      function syncTrigger(id, placeholder) {
+        var sel = getEl(id);
+        var trigger = getEl(id + '-trigger');
+        if (!sel || !trigger) return;
+        var val = sel.value;
+        if (!val) { trigger.textContent = placeholder; return; }
+        var opt = Array.from(sel.options).find(function (o) { return o.value === val; });
+        if (opt) {
+          var cleanLabel = opt.textContent.replace(/\s*\([^)]+\)$/, '').trim();
+          trigger.textContent = cleanLabel || placeholder;
+        }
+      }
+
+      function patchSelect(cfg) {
+        var sel = getEl(cfg.id);
+        if (!sel || sel._ssPatchDone) return;
+        sel._ssPatchDone = true;
+        var descriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+        Object.defineProperty(sel, 'innerHTML', {
+          get: function () { return descriptor.get.call(this); },
+          set: function (val) {
+            descriptor.set.call(this, val);
+            var dd = getEl(cfg.id + '-dd');
+            if (dd && dd.classList.contains('open')) {
+              var search = dd.querySelector('.ss-search');
+              var listEl = dd.querySelector('.ss-list');
+              buildList(this, listEl, search ? search.value : '', this.value);
+            }
+            syncTrigger(cfg.id, cfg.placeholder);
+          },
+          configurable: true
+        });
+      }
+
+      function initOne(cfg) {
+        var trigger = getEl(cfg.id + '-trigger');
+        var dd = getEl(cfg.id + '-dd');
+        var sel = getEl(cfg.id);
+        if (!trigger || !dd || !sel) return;
+
+        patchSelect(cfg);
+
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (dd.classList.contains('open')) {
+            closeDropdown(cfg.id);
+          } else {
+            openDropdown(cfg);
+          }
+        });
+
+        var searchInp = dd.querySelector('.ss-search');
+        var listEl = dd.querySelector('.ss-list');
+
+        searchInp.addEventListener('input', function () {
+          buildList(sel, listEl, searchInp.value, sel.value);
+        });
+
+        searchInp.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') { closeDropdown(cfg.id); trigger.focus(); }
+          if (e.key === 'ArrowDown') {
+            var opts = listEl.querySelectorAll('.ss-opt');
+            if (opts.length) { opts[0].focus(); }
+            e.preventDefault();
+          }
+          if (e.key === 'Enter') {
+            var first = listEl.querySelector('.ss-opt');
+            if (first) { selectValue(cfg, first.dataset.val); trigger.focus(); }
+          }
+        });
+
+        listEl.addEventListener('click', function (e) {
+          var opt = e.target.closest('.ss-opt');
+          if (opt) { selectValue(cfg, opt.dataset.val); trigger.focus(); }
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        if (!_openId) return;
+        var dd = getEl(_openId + '-dd');
+        var trigger = getEl(_openId + '-trigger');
+        if (dd && !dd.contains(e.target) && trigger && !trigger.contains(e.target)) {
+          closeDropdown(_openId);
+        }
+      });
+
+      function initAll() {
+        SS_CONFIGS.forEach(function (cfg) { initOne(cfg); });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAll);
+      } else {
+        initAll();
+      }
+
+    })();
+  </script>
+
 </body>
 
 </html>
