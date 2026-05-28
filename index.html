@@ -2936,10 +2936,16 @@
               style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Sora',sans-serif;outline:none">
               <option value="">Toutes équipes</option>
             </select>
-            <select id="heval-f-agent" onchange="renderHistEvals()"
-              style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:8px 12px;font-size:12px;font-family:'Sora',sans-serif;outline:none">
-              <option value="">Tous les agents</option>
-            </select>
+            <div class="ss-wrap" style="min-width:140px;width:auto">
+              <select id="heval-f-agent" style="display:none">
+                <option value="">Tous les agents</option>
+              </select>
+              <button type="button" class="ss-trigger ss-inline" id="heval-f-agent-trigger">Tous les agents</button>
+              <div class="ss-dropdown" id="heval-f-agent-dd">
+                <div class="ss-search-wrap"><input class="ss-search" placeholder="Rechercher un agent…" autocomplete="off"></div>
+                <div class="ss-list"></div>
+              </div>
+            </div>
             <button class="btn btn-primary btn-sm" onclick="openEvalModal()">+ Nouvelle évaluation</button>
           </div>
         </div>
